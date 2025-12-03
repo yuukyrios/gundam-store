@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Gundam-inspired mecha theme - dark mode default */
+    --background: 220 25% 8%;
+    --foreground: 0 0% 98%;
+
+    --card: 220 20% 12%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 220 25% 10%;
+    --popover-foreground: 0 0% 98%;
+
+    /* Gundam RX-78-2 Blue */
+    --primary: 220 90% 50%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 220 100% 65%;
+
+    /* Gundam Red accent */
+    --accent: 0 85% 55%;
+    --accent-foreground: 0 0% 100%;
+    --accent-glow: 0 100% 70%;
+
+    --secondary: 220 15% 18%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 220 15% 15%;
+    --muted-foreground: 220 10% 60%;
+
+    --destructive: 0 75% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 25%;
+    --input: 220 15% 20%;
+    --ring: 220 90% 50%;
+
+    --radius: 0.75rem;
+
+    /* Custom Gundam design tokens */
+    --gradient-hero: linear-gradient(135deg, hsl(220 90% 50%) 0%, hsl(0 85% 55%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(220 20% 14%) 0%, hsl(220 20% 10%) 100%);
+    --shadow-glow: 0 0 30px hsl(220 90% 50% / 0.3);
+    --shadow-accent: 0 0 20px hsl(0 85% 55% / 0.4);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
