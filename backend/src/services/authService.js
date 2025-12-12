@@ -3,6 +3,11 @@ import jwt from "jsonwebtoken";
 import { db } from "../config/db.js";
 import { ResponseError } from "../errors/responseError.js";
 
+const JWT_SECRET = "SECRET_KEY"; // move to env later
+
+// ---------------------------
+// REGISTER
+// ---------------------------
 export const register = async (data) => {
   const { username, email, password } = data;
 
@@ -17,14 +22,34 @@ export const register = async (data) => {
 
   const hashed = await bcrypt.hash(password, 10);
 
-  await db.query(
+  const [result] = await db.query(
     "INSERT INTO user (username, email, hashed_password) VALUES (?, ?, ?)",
     [username, email, hashed]
   );
 
-  return { message: "User created" };
+  // Fetch user with ID
+  const user = {
+    id: result.insertId,
+    username,
+    email
+  };
+
+  const token = jwt.sign(
+    { id: user.id, email: user.email },
+    JWT_SECRET,
+    { expiresIn: "1d" }
+  );
+
+  return {
+    message: "User created",
+    token,
+    user,
+  };
 };
 
+// ---------------------------
+// LOGIN
+// ---------------------------
 export const login = async (data) => {
   const { email, password } = data;
 
@@ -42,9 +67,16 @@ export const login = async (data) => {
 
   const token = jwt.sign(
     { id: user.id, email: user.email },
-    "SECRET_KEY",
+    JWT_SECRET,
     { expiresIn: "1d" }
   );
 
-  return { token };
+  return {
+    token,
+    user: {
+      id: user.id,
+      username: user.username,
+      email: user.email
+    }
+  };
 };
